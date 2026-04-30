@@ -11,6 +11,10 @@ public interface PriceCache {
 
     public PriceCacheType getType();
 
+    default public String generateKey(String ticker, DateRange range) {
+        return ticker + "/" + range.startDate() + "/" + range.endDate();
+    }
+
     public Map<LocalDate, PriceData> get(String ticker, DateRange range);
 
     public void put(String ticker, DateRange range, Map<LocalDate, PriceData> data);
