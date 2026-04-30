@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
-import io.github.siddharthbhansalidev.tickerquery.enums.PriceCallerType;
 import io.github.siddharthbhansalidev.tickerquery.interfaces.PriceCaller;
 import io.github.siddharthbhansalidev.tickerquery.model.DateRange;
 import io.github.siddharthbhansalidev.tickerquery.model.PriceData;
@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@ConditionalOnProperty(name = "price-caller", havingValue = "tiingo", matchIfMissing = true)
 public class TiingoPriceCaller implements PriceCaller {
 
     private final RestClient restClient;
@@ -29,10 +30,7 @@ public class TiingoPriceCaller implements PriceCaller {
         this.apiKey = apiKey;
     }
 
-    public PriceCallerType getType() {
-        return PriceCallerType.TIINGO;
-    }
-
+    @Override
     public Map<LocalDate, PriceData> fetch(String ticker, DateRange range) {
         log.info("Starting Tiingo API call for " + ticker + " from " + range.startDate() + " to " + range.endDate() + ".");
         List<TiingoPrice> response = restClient.get().uri(uriBuilder -> uriBuilder.path("/" + ticker + "/prices")

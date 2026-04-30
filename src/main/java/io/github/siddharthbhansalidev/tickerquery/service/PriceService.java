@@ -36,8 +36,8 @@ public class PriceService {
             for (Map.Entry<String, Future<Map<LocalDate, PriceData>>> taskMapEntry : taskMap.entrySet()) {
                 allData.put(taskMapEntry.getKey(), taskMapEntry.getValue().get());
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
 
         return allData;
