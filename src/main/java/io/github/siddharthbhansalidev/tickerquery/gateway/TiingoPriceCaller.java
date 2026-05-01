@@ -11,6 +11,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
+import io.github.siddharthbhansalidev.tickerquery.enums.PriceCallerType;
 import io.github.siddharthbhansalidev.tickerquery.interfaces.PriceCaller;
 import io.github.siddharthbhansalidev.tickerquery.model.DateRange;
 import io.github.siddharthbhansalidev.tickerquery.model.PriceData;
@@ -28,6 +29,11 @@ public class TiingoPriceCaller implements PriceCaller {
     public TiingoPriceCaller(RestClient.Builder restBuilder, @Value("${tiingo-api-key}") String apiKey) {
         this.restClient = restBuilder.baseUrl("https://api.tiingo.com/tiingo/daily").build();
         this.apiKey = apiKey;
+    }
+
+    @Override
+    public PriceCallerType getType() {
+        return PriceCallerType.TIINGO;
     }
 
     @Override
