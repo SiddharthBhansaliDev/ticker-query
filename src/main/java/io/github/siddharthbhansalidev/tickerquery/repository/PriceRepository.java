@@ -21,6 +21,7 @@ public class PriceRepository {
     public PriceRepository(PriceCache cache, PriceCaller caller) {
         this.cache = cache;
         this.caller = caller;
+        log.info("Cache is " + cache.getType() + " and caller is " + caller.getType() + ".");
     }
 
     public Map<LocalDate, PriceData> retrieve(String ticker, DateRange range) {

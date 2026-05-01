@@ -14,6 +14,7 @@ import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 
+import io.github.siddharthbhansalidev.tickerquery.enums.PriceCacheType;
 import io.github.siddharthbhansalidev.tickerquery.interfaces.PriceCache;
 import io.github.siddharthbhansalidev.tickerquery.model.DateRange;
 import io.github.siddharthbhansalidev.tickerquery.model.PriceData;
@@ -32,6 +33,11 @@ public class GcsCache implements PriceCache {
         this.bucketName = bucketName;
         this.storage = storage;
         this.mapper = mapper;
+    }
+
+    @Override
+    public PriceCacheType getType() {
+        return PriceCacheType.GCS;
     }
 
     @Override

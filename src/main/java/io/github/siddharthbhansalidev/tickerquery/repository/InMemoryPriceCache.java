@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import io.github.siddharthbhansalidev.tickerquery.enums.PriceCacheType;
 import io.github.siddharthbhansalidev.tickerquery.interfaces.PriceCache;
 import io.github.siddharthbhansalidev.tickerquery.model.DateRange;
 import io.github.siddharthbhansalidev.tickerquery.model.PriceData;
@@ -18,6 +19,11 @@ import io.github.siddharthbhansalidev.tickerquery.model.PriceData;
 public class InMemoryPriceCache implements PriceCache {
 
     private final ConcurrentMap<String, Map<LocalDate, PriceData>> cache = new ConcurrentHashMap<>();
+
+    @Override
+    public PriceCacheType getType() {
+        return PriceCacheType.IN_MEMORY;
+    }
 
     @Override
     public Map<LocalDate, PriceData> get(String ticker, DateRange range) {
