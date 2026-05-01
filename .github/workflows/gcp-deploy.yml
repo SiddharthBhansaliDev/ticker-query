@@ -1,0 +1,48 @@
+name: Deploy to GCP (Cloud Run)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Google Auth
+        id: auth
+        uses: google-github-actions/auth@v3
+        with:
+          token_format: 'access_token'
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_SA_EMAIL }}
+
+      - name: Set Up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v3
+
+      - name: Authorize Docker
+        run: |
+          gcloud auth configure-docker us-central1-docker.pkg.dev
+
+      - name: Build and Push Container
+        run: |
+          DOCKER_TAG="us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/main-repository/ticker-query:${{ github.sha }}"
+          docker build -t $DOCKER_TAG .
+          docker push $DOCKER_TAG
+          echo "IMAGE=$DOCKER_TAG" >> $GITHUB_ENV
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v3
+        with:
+          service: 'ticker-query'
+          region: 'us-central1'
+          image: ${{ env.IMAGE }}
