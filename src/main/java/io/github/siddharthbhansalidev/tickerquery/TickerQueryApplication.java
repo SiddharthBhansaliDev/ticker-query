@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.client.RestClient;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 @EnableScheduling
 @SpringBootApplication
 public class TickerQueryApplication {
@@ -17,6 +20,13 @@ public class TickerQueryApplication {
 	@Bean
 	RestClient.Builder restBuilder() {
 		return RestClient.builder();
+	}
+
+	@Bean
+	ObjectMapper objectMapper() {
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.registerModule(new JavaTimeModule());
+		return mapper;
 	}
 
 }

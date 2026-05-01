@@ -10,6 +10,7 @@ import java.util.concurrent.Future;
 
 import org.springframework.stereotype.Service;
 
+import io.github.siddharthbhansalidev.tickerquery.exception.PriceRetrievalException;
 import io.github.siddharthbhansalidev.tickerquery.model.DateRange;
 import io.github.siddharthbhansalidev.tickerquery.model.PriceData;
 import io.github.siddharthbhansalidev.tickerquery.repository.PriceRepository;
@@ -37,7 +38,7 @@ public class PriceService {
                 allData.put(taskMapEntry.getKey(), taskMapEntry.getValue().get());
             }
         } catch (Exception ex) {
-            throw new RuntimeException(ex);
+            throw new PriceRetrievalException(ex);
         }
 
         return allData;

@@ -50,3 +50,4 @@ jobs:
             --allow-unauthenticated
           env_vars: |
             TIINGO_API_KEY=${{ secrets.TIINGO_API_KEY }}
+            PRICE_CACHE=GCS
