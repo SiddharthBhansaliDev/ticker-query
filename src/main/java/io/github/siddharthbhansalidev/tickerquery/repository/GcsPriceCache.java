@@ -23,13 +23,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @ConditionalOnProperty(name = "price-cache", havingValue = "gcs")
-public class GcsCache implements PriceCache {
+public class GcsPriceCache implements PriceCache {
 
     private final String bucketName;
     private final Storage storage;
     private final ObjectMapper mapper;
 
-    public GcsCache(@Value("${gcs-bucket-name:ticker-query}") String bucketName, Storage storage, ObjectMapper mapper) {
+    public GcsPriceCache(@Value("${gcs-bucket-name:ticker-query}") String bucketName, Storage storage, ObjectMapper mapper) {
         this.bucketName = bucketName;
         this.storage = storage;
         this.mapper = mapper;
@@ -48,8 +48,8 @@ public class GcsCache implements PriceCache {
             if (blob != null && blob.exists()) {
                 return mapper.readValue(blob.getContent(), new TypeReference<>() {});
             }
-        } catch (Exception e) {
-            log.error("Failed to read from GCS cache.", e);
+        } catch (Exception ex) {
+            log.error("Failed to read from GCS cache.", ex);
         }
 
         return null;
@@ -62,8 +62,8 @@ public class GcsCache implements PriceCache {
             BlobId blobId = BlobId.of(bucketName, generateKey(ticker, range));
             BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("application/json").build();
             storage.create(blobInfo, bytes);
-        } catch (Exception e) {
-            log.error("Failed to write to GCS cache.", e);
+        } catch (Exception ex) {
+            log.error("Failed to write to GCS cache.", ex);
         }
     }
 
