@@ -1,8 +1,8 @@
-# Ticker Query
+# TickerQuery
 
 ## Overview
 
-Ticker Query is a Spring Boot REST API that allows you to pass in multiple tickers/date ranges simultaneously and quickly receive calculated statistics about each ticker's price over its corresponding date range. Currently, it will give you the start price, end price, and rate of return for each ticker.
+TickerQuery is a Spring Boot REST API that allows you to pass in multiple tickers/date ranges simultaneously and quickly receive calculated statistics about each ticker's price over its corresponding date range. Currently, it will give you the start price, end price, and rate of return for each ticker.
 
 ## Demo
 
