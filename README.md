@@ -37,7 +37,7 @@ Once the environment variables are configured, run the following command on eith
 
 `/query` is the endpoint for all price statistics. It takes in a map of tickers to date ranges over POST/JSON (input validation is done via Bean Validation). The application then retrieves price data and computes/returns price statistics. The output format is a JSON map where the tickers are the keys.
 
-There are two price data sources: a price caller (currenly only supports Tiingo) and a price cache (currently supports in-memory + GCS). These are configurable via the PRICE_CALLER and PRICE_CACHE environment variables, although the PRICE_CALLER variable is currently a bit useless since it defaults to the only option, Tiingo.
+There are two price data sources: a price caller (currently only supports Tiingo) and a price cache (currently supports in-memory + GCS). These are configurable via the PRICE_CALLER and PRICE_CACHE environment variables, although the PRICE_CALLER variable is currently a bit useless since it defaults to the only option, Tiingo.
 
 The way that the price data retrieval works is this: the application fires off parallel virtual threads for each ticker, and each thread first checks the cache, and falls back to the price caller (makes a REST API call) if necessary. If the price caller was successfully used, the new data gets cached. It fails fast, meaning a single thread failing will make the entire process fail.
 
