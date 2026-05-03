@@ -2,13 +2,22 @@
 
 ## Overview
 
-TickerQuery is a Spring Boot REST API that allows you to pass in multiple tickers/date ranges simultaneously and quickly receive calculated statistics about each ticker's price over its corresponding date range. Currently, it will give you the start price, end price, and rate of return for each ticker.
+TickerQuery is a Spring Boot REST API that takes in multiple tickers/date ranges simultaneously and outputs calculated statistics about each ticker's price over its corresponding date range. Currently, it will return the start price, end price, and rate of return for each ticker.
+
+<img width="346" height="364" alt="TickerQuery Screenshot" src="https://github.com/user-attachments/assets/a498c488-f4f3-4611-8d82-24acff5bece5" />
 
 ## Demo
 
 There is a Swagger page with default input here: [https://ticker-query-29369384786.us-central1.run.app](https://ticker-query-29369384786.us-central1.run.app)
 
-**NOTE**: The demo is hosted on scale-to-zero infrastructure (GCP Cloud Run). This means that when you click the above link, there is a high chance that you will encounter a "cold start" (long loading time) while the instance initializes. Once the Swagger page loads, the API itself won't have this issue.
+**NOTE:** This demo runs on GCP Cloud Run with scale-to-zero enabled to minimize cost. As a result, you may experience a cold start while the container initializes.
+
+This can appear in two stages:
+
+- Initial page load (Swagger UI): slower load time as the service starts
+- First API request after load: additional latency while the application fully initializes
+
+Once warmed, both the UI and API responses become consistently fast. After a period of inactivity, the demo will reset back to a "cold" state.
 
 ## Deploying Locally
 
