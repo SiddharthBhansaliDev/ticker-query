@@ -21,7 +21,7 @@ Once warmed, both the UI and API responses become consistently fast. After a per
 
 ## Running Locally
 
-You need Spring Boot 4.0.6 and Java 25. Additionally, currently the only price caller type supported is Tiingo, so you will need a Tiingo API key as well. As of May 2026, Tiingo has a very generous free tier, and all you need to sign up is an email address.
+You need Java 25 or higher. Additionally, currently the only price caller type supported is Tiingo, so you will need a Tiingo API key as well. As of May 2026, Tiingo has a very generous free tier, and all you need to sign up is an email address.
 
 You will need to configure the following environment variables:
 
